@@ -97,8 +97,6 @@
 <style>
 .rating-stars {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
     gap: 5px;
 }
 
@@ -113,14 +111,20 @@
     transition: color 0.2s;
 }
 
-.rating-stars input[type="radio"]:checked ~ label,
-.rating-stars label:hover,
-.rating-stars label:hover ~ label {
+.rating-stars label:hover {
     color: #ffc107;
 }
 
 .rating-stars input[type="radio"]:checked ~ label {
     color: #ffc107;
+}
+
+/* When a star is checked, highlight it and all previous stars */
+.rating-stars input[type="radio"]:checked,
+.rating-stars input[type="radio"]:checked ~ input[type="radio"] {
+    + label {
+        color: #ffc107;
+    }
 }
 </style>
 @endpush
@@ -129,12 +133,23 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const stars = document.querySelectorAll('.rating-stars label');
-    
+    const radioInputs = document.querySelectorAll('.rating-stars input[type="radio"]');
+
+    // Handle star clicks
+    radioInputs.forEach((input, index) => {
+        input.addEventListener('change', function() {
+            if (this.checked) {
+                highlightStars(this.value);
+            }
+        });
+    });
+
+    // Handle star hover
     stars.forEach((star, index) => {
         star.addEventListener('mouseover', function() {
-            highlightStars(5 - index);
+            highlightStars(index + 1);
         });
-        
+
         star.addEventListener('mouseout', function() {
             const checkedStar = document.querySelector('.rating-stars input[type="radio"]:checked');
             if (checkedStar) {
@@ -144,10 +159,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     function highlightStars(rating) {
         stars.forEach((star, index) => {
-            if (5 - index <= rating) {
+            if (index < rating) {
                 star.style.color = '#ffc107';
             } else {
                 star.style.color = '#ddd';

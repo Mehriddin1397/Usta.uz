@@ -35,17 +35,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => ['nullable', 'string', 'max:20'],
-            'region_id' => ['required', 'exists:regions,id'],
-            'user_type' => ['required', 'in:user,master'],
-            'category_id' => ['required_if:user_type,master', 'exists:categories,id'],
-            'description' => ['required_if:user_type,master', 'string', 'max:1000'],
-            'experience_years' => ['required_if:user_type,master', 'integer', 'min:0', 'max:50'],
-        ]);
+        try {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'phone' => ['nullable', 'string', 'max:20'],
+                'region_id' => ['required', 'exists:regions,id'],
+                'user_type' => ['required', 'in:user,master'],
+                'category_id' => ['required_if:user_type,master', 'exists:categories,id'],
+                'description' => ['required_if:user_type,master', 'string', 'max:1000'],
+                'experience_years' => ['required_if:user_type,master', 'integer', 'min:0', 'max:50'],
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // If validation fails, redirect back with regions and categories
+            $regions = Region::all();
+            $categories = Category::all();
+            return redirect()->back()
+                ->withErrors($e->validator)
+                ->withInput()
+                ->with(compact('regions', 'categories'));
+        }
 
         $user = User::create([
             'name' => $request->name,

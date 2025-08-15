@@ -78,11 +78,26 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'uz'),
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'uz'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Available Locales
+    |--------------------------------------------------------------------------
+    |
+    | List of available locales for the application.
+    |
+    */
+
+    'available_locales' => [
+        'uz' => 'O\'zbekcha (Lotin)',
+        'uz-Cyrl' => 'Ўзбекча (Кирилл)',
+        'ru' => 'Русский',
+    ],
 
     /*
     |--------------------------------------------------------------------------

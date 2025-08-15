@@ -4,7 +4,7 @@
             $firstMedia = $master->works->first()->media_paths[0] ?? null;
         @endphp
         @if($firstMedia)
-            <img src="{{ asset('storage/' . $firstMedia) }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Ish namunasi">
+            <img src="{{ asset('storage/' . $firstMedia) }}" class="card-img-top clickable-image" style="height: 200px; object-fit: cover; cursor: pointer;" alt="Ish namunasi">
         @endif
     @else
         <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">

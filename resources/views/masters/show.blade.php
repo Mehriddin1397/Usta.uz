@@ -19,9 +19,30 @@
                     </p>
                     
                     @if($master->user->region)
-                        <p class="text-muted mb-3">
+                        <p class="text-muted mb-2">
                             <i class="bi bi-geo-alt"></i> {{ $master->user->region->name }}
                         </p>
+                    @endif
+
+                    @if($master->user->phone)
+                        @php
+                            $hasActiveOrder = auth()->check() &&
+                                auth()->user()->orders()
+                                    ->where('master_id', $master->id)
+                                    ->whereIn('status', ['accepted', 'in_progress', 'completed'])
+                                    ->exists();
+                        @endphp
+
+                        @if($hasActiveOrder)
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-telephone"></i> {{ $master->user->phone }}
+                            </p>
+                        @else
+                            <p class="text-muted mb-3">
+                                <i class="bi bi-telephone"></i>
+                                <span class="text-warning">Telefon raqami buyurtma berilgandan keyin ko'rinadi</span>
+                            </p>
+                        @endif
                     @endif
                     
                     <!-- Rating -->
@@ -99,9 +120,9 @@
                                     @foreach($work->media_paths as $media)
                                         <div class="col-md-4 mb-2">
                                             @if(Str::contains($media, ['.jpg', '.jpeg', '.png', '.gif']))
-                                                <img src="{{ asset('storage/' . $media) }}" 
-                                                     class="img-fluid rounded" 
-                                                     style="height: 150px; object-fit: cover; width: 100%;"
+                                                <img src="{{ asset('storage/' . $media) }}"
+                                                     class="img-fluid rounded clickable-image"
+                                                     style="height: 150px; object-fit: cover; width: 100%; cursor: pointer;"
                                                      alt="Ish namunasi">
                                             @elseif(Str::contains($media, ['.mp4', '.mov', '.avi']))
                                                 <video controls class="w-100 rounded" style="height: 150px;">
@@ -154,9 +175,9 @@
                                     @foreach($review->media_paths as $media)
                                         <div class="col-md-3 mb-2">
                                             @if(Str::contains($media, ['.jpg', '.jpeg', '.png', '.gif']))
-                                                <img src="{{ asset('storage/' . $media) }}" 
-                                                     class="img-fluid rounded" 
-                                                     style="height: 100px; object-fit: cover; width: 100%;"
+                                                <img src="{{ asset('storage/' . $media) }}"
+                                                     class="img-fluid rounded clickable-image"
+                                                     style="height: 100px; object-fit: cover; width: 100%; cursor: pointer;"
                                                      alt="Sharh rasmi">
                                             @endif
                                         </div>

@@ -34,9 +34,52 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Bosh sahifa</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contact') }}">Aloqa</a>
+                    </li>
                 </ul>
                 
                 <ul class="navbar-nav">
+                    <!-- Language Switcher -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-globe"></i>
+                            @switch(app()->getLocale())
+                                @case('uz')
+                                    O'zbekcha
+                                    @break
+                                @case('uz-Cyrl')
+                                    Ўзбекча
+                                    @break
+                                @case('ru')
+                                    Русский
+                                    @break
+                                @default
+                                    O'zbekcha
+                            @endswitch
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item {{ app()->getLocale() == 'uz' ? 'active' : '' }}"
+                                   href="{{ route('language.change', 'uz') }}">
+                                    O'zbekcha (Lotin)
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ app()->getLocale() == 'uz-Cyrl' ? 'active' : '' }}"
+                                   href="{{ route('language.change', 'uz-Cyrl') }}">
+                                    Ўзбекча (Кирилл)
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ app()->getLocale() == 'ru' ? 'active' : '' }}"
+                                   href="{{ route('language.change', 'ru') }}">
+                                    Русский
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     @auth
                         @if(auth()->user()->isMaster())
                             <li class="nav-item">
@@ -104,8 +147,32 @@
             </div>
         @endif
 
+        <!-- Back Button (show on all pages except home) -->
+        @if(!request()->routeIs('home'))
+            <div class="container py-2">
+                <button onclick="history.back()" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> Ortga
+                </button>
+            </div>
+        @endif
+
         @yield('content')
     </main>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Rasm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" class="img-fluid" alt="Katta rasm">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-dark text-light py-4 mt-5">
@@ -124,6 +191,25 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Image Modal Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event to all images with class 'clickable-image'
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('clickable-image')) {
+                    const modalImage = document.getElementById('modalImage');
+                    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+
+                    modalImage.src = e.target.src;
+                    modalImage.alt = e.target.alt;
+
+                    imageModal.show();
+                }
+            });
+        });
+    </script>
+
     @stack('scripts')
 </body>
 </html>
