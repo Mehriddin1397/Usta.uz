@@ -9,7 +9,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <h1 class="display-4 fw-bold mb-4">Eng yaxshi ustalarni toping</h1>
-                <p class="lead mb-4">Usta.uz orqali o'z hududingizdagi malakali ustalarni toping va ularning ishlarini ko'ring</p>
+                <p class="lead mb-4">Ustalar24.uz orqali o'z hududingizdagi malakali ustalarni toping va ularning ishlarini ko'ring</p>
             </div>
             <div class="col-lg-6">
                 <!-- Search Form -->
@@ -19,36 +19,36 @@
                         <form method="GET" action="{{ route('home') }}">
                             <div class="mb-3">
                                 <label for="search" class="form-label text-dark">Qidiruv</label>
-                                <input type="text" class="form-control" id="search" name="search" 
+                                <input type="text" class="form-control" id="search" name="search"
                                        value="{{ request('search') }}" placeholder="Usta yoki kasb nomi...">
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="region_id" class="form-label text-dark">Hudud</label>
                                 <select class="form-select" id="region_id" name="region_id">
                                     <option value="">Barcha hududlar</option>
                                     @foreach($regions as $region)
-                                        <option value="{{ $region->id }}" 
+                                        <option value="{{ $region->id }}"
                                                 {{ request('region_id') == $region->id ? 'selected' : '' }}>
                                             {{ $region->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label for="category_id" class="form-label text-dark">Kasb turi</label>
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Barcha kasblar</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}" 
+                                        <option value="{{ $category->id }}"
                                                 {{ request('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="bi bi-search"></i> Qidirish
                             </button>
@@ -72,7 +72,7 @@
                     </div>
                 @endforeach
             </div>
-            
+
             {{ $masters->links() }}
         @else
             <!-- Featured Masters -->
@@ -99,7 +99,7 @@
 <!-- Features Section -->
 <section class="bg-light py-5">
     <div class="container">
-        <h2 class="text-center mb-5">Nega Usta.uz?</h2>
+        <h2 class="text-center mb-5">Nega Ustalar24.uz?</h2>
         <div class="row">
             <div class="col-md-4 text-center mb-4">
                 <i class="bi bi-shield-check display-4 text-primary mb-3"></i>

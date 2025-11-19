@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Usta.uz') }} - @yield('title', 'Ustalar platformasi')</title>
+    <title>{{ config('app.name', 'Ustalar24.uz') }} - @yield('title', 'Ustalar platformasi')</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,13 +22,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-                <i class="bi bi-tools"></i> Usta.uz
+                <i class="bi bi-tools"></i> Ustalar24.uz
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -38,7 +38,7 @@
                         <a class="nav-link" href="{{ route('contact') }}">Aloqa</a>
                     </li>
                 </ul>
-                
+
                 <ul class="navbar-nav">
                     <!-- Language Switcher -->
                     <li class="nav-item dropdown">
@@ -88,7 +88,7 @@
                                 </a>
                             </li>
                         @endif
-                        
+
                         @if(auth()->user()->isAdmin())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin.dashboard') }}">
@@ -96,13 +96,13 @@
                                 </a>
                             </li>
                         @endif
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('orders.index') }}">
                                 <i class="bi bi-list-task"></i> Buyurtmalarim
                             </a>
                         </li>
-                        
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-person-circle"></i> {{ auth()->user()->name }}
