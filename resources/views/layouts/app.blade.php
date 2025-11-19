@@ -179,11 +179,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>Usta.uz</h5>
+                    <h5>Ustalar24.uz</h5>
                     <p>Foydalanuvchi va ustalarni bog'lovchi platforma</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p>&copy; {{ date('Y') }} Usta.uz. Barcha huquqlar himoyalangan.</p>
+                    <p>&copy; {{ date('Y') }} Ustalar24.uz. Barcha huquqlar himoyalangan.</p>
                 </div>
             </div>
         </div>
