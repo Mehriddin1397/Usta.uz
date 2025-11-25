@@ -39,7 +39,7 @@ class AdminController extends Controller
     public function users()
     {
         $users = User::with('region')->paginate(20);
-        
+
         return view('admin.users', compact('users'));
     }
 
@@ -61,7 +61,7 @@ class AdminController extends Controller
     public function approveMaster(Master $master)
     {
         $master->update(['is_approved' => true]);
-        
+
         // Change user role to master
         $master->user->update(['role' => 'master']);
 
@@ -74,7 +74,7 @@ class AdminController extends Controller
     public function categories()
     {
         $categories = Category::withCount('masters')->paginate(20);
-        
+
         return view('admin.categories', compact('categories'));
     }
 
@@ -93,13 +93,28 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Kategoriya qo\'shildi.');
     }
 
+    public function destroyCategory($id)
+    {
+        $category = Category::findOrFail($id);
+
+        // Agar shu kategoriyaga bog‘langan masterlar bo‘lsa, o‘chirib bo‘lmaydi
+        if ($category->masters()->count() > 0) {
+            return redirect()->back()->with('error', 'Bu kategoriya o‘chirila olmaydi. Avval unga bog‘langan ustalarni o‘chiring.');
+        }
+
+        $category->delete();
+
+        return redirect()->back()->with('success', 'Kategoriya muvaffaqiyatli o‘chirildi.');
+    }
+
+
     /**
      * Show regions management.
      */
     public function regions()
     {
         $regions = Region::withCount('users')->paginate(20);
-        
+
         return view('admin.regions', compact('regions'));
     }
 

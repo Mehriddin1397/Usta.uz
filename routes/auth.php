@@ -57,3 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+// Profilni tahrirlash sahifasi
+Route::get('/profile/{user}/edit', [RegisteredUserController::class, 'edit'])
+    ->name('profile.edit');
+
+// Profilni yangilash (PUT)
+Route::put('/profile/{user}', [RegisteredUserController::class, 'update'])
+    ->name('profile.update');

@@ -27,11 +27,11 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Kategoriya nomi</label>
-                            <input type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" 
-                                   name="name" 
-                                   value="{{ old('name') }}" 
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
+                                   id="name"
+                                   name="name"
+                                   value="{{ old('name') }}"
                                    required>
                             @error('name')
                                 <div class="invalid-feedback">
@@ -39,12 +39,12 @@
                                 </div>
                             @enderror
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="description" class="form-label">Tavsif</label>
-                            <textarea class="form-control @error('description') is-invalid @enderror" 
-                                      id="description" 
-                                      name="description" 
+                            <textarea class="form-control @error('description') is-invalid @enderror"
+                                      id="description"
+                                      name="description"
                                       rows="3">{{ old('description') }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">
@@ -52,7 +52,7 @@
                                 </div>
                             @enderror
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-plus-circle"></i> Qo'shish
                         </button>
@@ -77,7 +77,7 @@
                                         <th>Nom</th>
                                         <th>Tavsif</th>
                                         <th>Ustalar soni</th>
-                                        <th>Yaratilgan</th>
+                                        <th>O'chirish</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,7 +89,14 @@
                                             <td>
                                                 <span class="badge bg-primary">{{ $category->masters_count }}</span>
                                             </td>
-                                            <td>{{ $category->created_at->format('d.m.Y') }}</td>
+                                            <td><form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Rostdan ham o‘chirilsinmi?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
