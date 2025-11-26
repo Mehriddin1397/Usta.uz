@@ -131,4 +131,16 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Hudud qo\'shildi.');
     }
+
+    public function storeDistrict(Request $request)
+    {
+        $request->validate([
+            'region_id' => 'required|exists:regions,id',
+            'name' => 'required|string|max:255|unique:districts',
+        ]);
+
+        District::create($request->only(['name', 'region_id']));
+
+        return redirect()->back()->with('success', 'Tuman qo‘shildi.');
+    }
 }

@@ -58,4 +58,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/categories', [AdminController::class, 'storeCategory'])->name('admin.categories.store');
     Route::get('/admin/regions', [AdminController::class, 'regions'])->name('admin.regions');
     Route::post('/admin/regions', [AdminController::class, 'storeRegion'])->name('admin.regions.store');
+    Route::post('/admin/districts', [AdminController::class, 'storeDistrict'])->name('admin.districts.store');
 });
