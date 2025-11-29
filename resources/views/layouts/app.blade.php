@@ -116,6 +116,11 @@
                                         </button>
                                     </form>
                                 </li>
+                                <li>
+                                    <a href="{{ route('profile.edit', auth()->user()->id) }}" class="btn btn-outline-primary">
+                                        Profilni tahrirlash
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     @else
