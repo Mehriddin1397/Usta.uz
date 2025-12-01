@@ -20,9 +20,6 @@ class District extends Model
         return $this->belongsTo(Region::class);
     }
 
-    public function districts()
-    {
-        return $this->hasMany(District::class);
-    }
+
 
 }

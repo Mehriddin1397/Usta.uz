@@ -27,11 +27,11 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Hudud nomi</label>
-                            <input type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" 
-                                   name="name" 
-                                   value="{{ old('name') }}" 
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
+                                   id="name"
+                                   name="name"
+                                   value="{{ old('name') }}"
                                    placeholder="Masalan: Toshkent shahri"
                                    required>
                             @error('name')
@@ -40,12 +40,40 @@
                                 </div>
                             @enderror
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-plus-circle"></i> Qo'shish
                         </button>
                     </form>
                 </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Yangi tuman qo'shish</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('admin.districts.store') }}" method="POST">
+                        @csrf
+
+                        <div class="mb-3">
+                            <label>Viloyat</label>
+                            <select name="region_id" class="form-control" required>
+                                <option value="">Viloyatni tanlang</option>
+                                @foreach($regions as $region)
+                                    <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Tuman nomi</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+
+                        <button class="btn btn-primary">Qo‘shish</button>
+                    </form>
+                </div>
+
             </div>
         </div>
 
@@ -55,43 +83,70 @@
                 <div class="card-header">
                     <h5 class="mb-0">Mavjud hududlar</h5>
                 </div>
+
                 <div class="card-body">
+
                     @if($regions->count() > 0)
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nom</th>
-                                        <th>Foydalanuvchilar soni</th>
-                                        <th>Yaratilgan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($regions as $region)
-                                        <tr>
-                                            <td>{{ $region->id }}</td>
-                                            <td><strong>{{ $region->name }}</strong></td>
-                                            <td>
-                                                <span class="badge bg-primary">{{ $region->users_count }}</span>
-                                            </td>
-                                            <td>{{ $region->created_at->format('d.m.Y') }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+
+                        <div class="accordion" id="regionAccordion">
+
+                            @foreach($regions as $region)
+                                <div class="accordion-item mb-2">
+
+                                    <h2 class="accordion-header" id="heading{{ $region->id }}">
+                                        <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapse{{ $region->id }}"
+                                                aria-expanded="false"
+                                                aria-controls="collapse{{ $region->id }}">
+
+                                            <span class="me-3">#{{ $region->id }}</span>
+                                            <strong>{{ $region->name }}</strong>
+                                            <span class="badge bg-primary ms-auto">
+                                        {{ $region->users_count }} foydalanuvchi
+                                    </span>
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapse{{ $region->id }}" class="accordion-collapse collapse"
+                                         aria-labelledby="heading{{ $region->id }}"
+                                         data-bs-parent="#regionAccordion">
+
+                                        <div class="accordion-body">
+
+                                            @if($region->districts->count() > 0)
+                                                <ul class="list-group">
+                                                    @foreach($region->districts as $district)
+                                                        <li class="list-group-item d-flex justify-content-between">
+                                                            {{ $district->name }}
+                                                            <span class="text-muted">{{ $district->created_at->format('d.m.Y') }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                <p class="text-muted">Bu viloyatda hali tumanlar yo‘q.</p>
+                                            @endif
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endforeach
+
                         </div>
 
                         <!-- Pagination -->
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center mt-3">
                             {{ $regions->links() }}
                         </div>
+
                     @else
                         <p class="text-muted text-center py-4">Hozircha hududlar yo'q</p>
                     @endif
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection

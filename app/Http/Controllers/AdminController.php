@@ -7,6 +7,7 @@ use App\Models\Master;
 use App\Models\Category;
 use App\Models\Region;
 use App\Models\Order;
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -113,9 +114,11 @@ class AdminController extends Controller
      */
     public function regions()
     {
-        $regions = Region::withCount('users')->paginate(20);
+        $regions = Region::with(['districts'])->withCount('users')->paginate(20);
+        $districts = District::with('region')->latest()->get();
 
-        return view('admin.regions', compact('regions'));
+
+        return view('admin.regions', compact('regions', 'districts'));
     }
 
     /**
@@ -131,6 +134,7 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Hudud qo\'shildi.');
     }
+
 
     public function storeDistrict(Request $request)
     {

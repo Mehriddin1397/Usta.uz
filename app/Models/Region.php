@@ -28,4 +28,8 @@ class Region extends Model
     {
         return $this->hasManyThrough(Master::class, User::class);
     }
+    public function districts()
+    {
+        return $this->hasMany(District::class);
+    }
 }
