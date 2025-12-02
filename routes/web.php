@@ -59,4 +59,5 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/regions', [AdminController::class, 'regions'])->name('admin.regions');
     Route::post('/admin/regions', [AdminController::class, 'storeRegion'])->name('admin.regions.store');
     Route::post('/admin/districts', [AdminController::class, 'storeDistrict'])->name('admin.districts.store');
+    Route::delete('/districts/{id}', [AdminController::class, 'destroyDistrict'])->name('districts.destroy');
 });

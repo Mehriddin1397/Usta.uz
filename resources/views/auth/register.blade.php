@@ -17,13 +17,13 @@
                         <!-- Name -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Ism</label>
-                            <input type="text" 
-                                   class="form-control @error('name') is-invalid @enderror" 
-                                   id="name" 
-                                   name="name" 
-                                   value="{{ old('name') }}" 
-                                   required 
-                                   autofocus 
+                            <input type="text"
+                                   class="form-control @error('name') is-invalid @enderror"
+                                   id="name"
+                                   name="name"
+                                   value="{{ old('name') }}"
+                                   required
+                                   autofocus
                                    autocomplete="name">
                             @error('name')
                                 <div class="invalid-feedback">
@@ -35,12 +35,12 @@
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" 
-                                   class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" 
-                                   name="email" 
-                                   value="{{ old('email') }}" 
-                                   required 
+                            <input type="email"
+                                   class="form-control @error('email') is-invalid @enderror"
+                                   id="email"
+                                   name="email"
+                                   value="{{ old('email') }}"
+                                   required
                                    autocomplete="username">
                             @error('email')
                                 <div class="invalid-feedback">
@@ -52,11 +52,11 @@
                         <!-- Phone -->
                         <div class="mb-3">
                             <label for="phone" class="form-label">Telefon raqam</label>
-                            <input type="text" 
-                                   class="form-control @error('phone') is-invalid @enderror" 
-                                   id="phone" 
-                                   name="phone" 
-                                   value="{{ old('phone') }}" 
+                            <input type="text"
+                                   class="form-control @error('phone') is-invalid @enderror"
+                                   id="phone"
+                                   name="phone"
+                                   value="{{ old('phone') }}"
                                    placeholder="+998901234567">
                             @error('phone')
                                 <div class="invalid-feedback">
@@ -68,9 +68,9 @@
                         <!-- Region -->
                         <div class="mb-3">
                             <label for="region_id" class="form-label">Hudud</label>
-                            <select class="form-select @error('region_id') is-invalid @enderror" 
-                                    id="region_id" 
-                                    name="region_id" 
+                            <select class="form-select @error('region_id') is-invalid @enderror"
+                                    id="region_id"
+                                    name="region_id"
                                     required>
                                 <option value="">Hududni tanlang</option>
                                 @foreach($regions as $region)
@@ -85,6 +85,24 @@
                                 </div>
                             @enderror
                         </div>
+
+                        <!-- District -->
+                        <div class="mb-3">
+                            <label for="district_id" class="form-label">Tuman</label>
+                            <select class="form-select @error('district_id') is-invalid @enderror"
+                                    id="district_id"
+                                    name="district_id"
+                                    required>
+                                <option value="">Avval hududni tanlang</option>
+                            </select>
+
+                            @error('district_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
 
                         <!-- User Type -->
                         <div class="mb-3">
@@ -114,8 +132,8 @@
                         <div id="master_fields" style="display: {{ old('user_type') == 'master' ? 'block' : 'none' }};">
                             <div class="mb-3">
                                 <label for="category_id" class="form-label">Kasb turi</label>
-                                <select class="form-select @error('category_id') is-invalid @enderror" 
-                                        id="category_id" 
+                                <select class="form-select @error('category_id') is-invalid @enderror"
+                                        id="category_id"
                                         name="category_id">
                                     <option value="">Kasb turini tanlang</option>
                                     @foreach($categories as $category)
@@ -133,12 +151,12 @@
 
                             <div class="mb-3">
                                 <label for="experience_years" class="form-label">Tajriba (yil)</label>
-                                <input type="number" 
-                                       class="form-control @error('experience_years') is-invalid @enderror" 
-                                       id="experience_years" 
-                                       name="experience_years" 
-                                       value="{{ old('experience_years') }}" 
-                                       min="0" 
+                                <input type="number"
+                                       class="form-control @error('experience_years') is-invalid @enderror"
+                                       id="experience_years"
+                                       name="experience_years"
+                                       value="{{ old('experience_years') }}"
+                                       min="0"
                                        max="50">
                                 @error('experience_years')
                                     <div class="invalid-feedback">
@@ -149,10 +167,10 @@
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">O'zingiz haqingizda</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" 
-                                          id="description" 
-                                          name="description" 
-                                          rows="3" 
+                                <textarea class="form-control @error('description') is-invalid @enderror"
+                                          id="description"
+                                          name="description"
+                                          rows="3"
                                           placeholder="Qanday ishlarni bajarasiz, tajribangiz haqida yozing...">{{ old('description') }}</textarea>
                                 @error('description')
                                     <div class="invalid-feedback">
@@ -165,11 +183,11 @@
                         <!-- Password -->
                         <div class="mb-3">
                             <label for="password" class="form-label">Parol</label>
-                            <input type="password" 
-                                   class="form-control @error('password') is-invalid @enderror" 
-                                   id="password" 
-                                   name="password" 
-                                   required 
+                            <input type="password"
+                                   class="form-control @error('password') is-invalid @enderror"
+                                   id="password"
+                                   name="password"
+                                   required
                                    autocomplete="new-password">
                             @error('password')
                                 <div class="invalid-feedback">
@@ -181,11 +199,11 @@
                         <!-- Confirm Password -->
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Parolni tasdiqlang</label>
-                            <input type="password" 
-                                   class="form-control @error('password_confirmation') is-invalid @enderror" 
-                                   id="password_confirmation" 
-                                   name="password_confirmation" 
-                                   required 
+                            <input type="password"
+                                   class="form-control @error('password_confirmation') is-invalid @enderror"
+                                   id="password_confirmation"
+                                   name="password_confirmation"
+                                   required
                                    autocomplete="new-password">
                             @error('password_confirmation')
                                 <div class="invalid-feedback">
@@ -218,7 +236,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const userTypeRadios = document.querySelectorAll('input[name="user_type"]');
     const masterFields = document.getElementById('master_fields');
-    
+
     userTypeRadios.forEach(radio => {
         radio.addEventListener('change', function() {
             if (this.value === 'master') {
@@ -229,6 +247,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+    // Master fields toggling
+    const userTypeRadios = document.querySelectorAll('input[name="user_type"]');
+    const masterFields = document.getElementById('master_fields');
+
+    userTypeRadios.forEach(radio => {
+    radio.addEventListener('change', function() {
+    masterFields.style.display = this.value === 'master' ? 'block' : 'none';
+});
+});
+
+    // ------- AJAX District loading -------
+    const regionSelect = document.getElementById('region_id');
+    const districtSelect = document.getElementById('district_id');
+
+    regionSelect.addEventListener('change', function() {
+    let regionId = this.value;
+
+    districtSelect.innerHTML = '<option value="">Yuklanmoqda...</option>';
+
+    fetch(`/get-districts/${regionId}`)
+    .then(response => response.json())
+    .then(data => {
+    districtSelect.innerHTML = '<option value="">Tuman tanlang</option>';
+
+    data.forEach(district => {
+    let option = `<option value="${district.id}">${district.name}</option>`;
+    districtSelect.innerHTML += option;
+});
+});
+});
+});
+
+
 </script>
 @endpush
 @endsection

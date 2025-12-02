@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\District;
 use App\Models\User;
 use App\Models\Region;
 use App\Models\Category;
@@ -26,6 +27,8 @@ class RegisteredUserController extends Controller
         $regions = Region::all();
         $categories = Category::all();
 
+
+
         return view('auth.register', compact('regions', 'categories'));
     }
 
@@ -47,6 +50,7 @@ class RegisteredUserController extends Controller
                 'category_id' => ['required_if:user_type,master', 'exists:categories,id'],
                 'description' => ['required_if:user_type,master', 'string', 'max:1000'],
                 'experience_years' => ['required_if:user_type,master', 'integer', 'min:0', 'max:50'],
+                'district_id' => ['required', 'exists:districts,id'],
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             // If validation fails, redirect back with regions and categories
@@ -64,7 +68,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'region_id' => $request->region_id,
-            'role' => 'user', // Default role, admin will change to master if needed
+            'district_id' => $request->district_id,
         ]);
 
         // If user wants to be a master, create master profile

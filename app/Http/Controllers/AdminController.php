@@ -147,4 +147,13 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Tuman qo‘shildi.');
     }
+
+    public function destroyDistrict($id)
+    {
+        District::findOrFail($id)->delete();
+
+        return redirect()->back()->with('success', 'Tuman o‘chirildi.');
+    }
+
+
 }

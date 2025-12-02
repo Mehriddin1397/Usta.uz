@@ -23,7 +23,9 @@ class User extends Authenticatable
         'phone',
         'role',
         'region_id',
+        'district_id', // qo‘shildi
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -100,4 +102,10 @@ class User extends Authenticatable
     {
         return $this->role === 'user';
     }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
+
 }

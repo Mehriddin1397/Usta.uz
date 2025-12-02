@@ -35,6 +35,8 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
+
+
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
@@ -65,3 +67,5 @@ Route::get('/profile/{user}/edit', [RegisteredUserController::class, 'edit'])
 // Profilni yangilash (PUT)
 Route::put('/profile/{user}', [RegisteredUserController::class, 'update'])
     ->name('profile.update');
+
+Route::get('/get-districts/{region_id}', [App\Http\Controllers\DistrictController::class, 'getDistricts']);

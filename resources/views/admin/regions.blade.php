@@ -119,7 +119,12 @@
                                                     @foreach($region->districts as $district)
                                                         <li class="list-group-item d-flex justify-content-between">
                                                             {{ $district->name }}
-                                                            <span class="text-muted">{{ $district->created_at->format('d.m.Y') }}</span>
+                                                            <span class="text-muted"><form action="{{ route('districts.destroy', $district->id) }}" method="POST"
+                                                                                           onsubmit="return confirm('Rostdan o‘chirilsinmi?')">
+                            @csrf
+                                                                    @method('DELETE')
+                            <button class="btn btn-danger btn-sm">O‘chirish</button>
+                        </form></span>
                                                         </li>
                                                     @endforeach
                                                 </ul>
