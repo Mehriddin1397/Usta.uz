@@ -17,44 +17,91 @@
                     <div class="card-body">
                         <h5 class="card-title text-dark">Usta qidirish</h5>
                         <form method="GET" action="{{ route('home') }}">
+
+                            <!-- Qidiruv -->
                             <div class="mb-3">
                                 <label for="search" class="form-label text-dark">Qidiruv</label>
                                 <input type="text" class="form-control" id="search" name="search"
                                        value="{{ request('search') }}" placeholder="Usta yoki kasb nomi...">
                             </div>
 
+                            <!-- Region -->
                             <div class="mb-3">
                                 <label for="region_id" class="form-label text-dark">Hudud</label>
                                 <select class="form-select" id="region_id" name="region_id">
                                     <option value="">Barcha hududlar</option>
                                     @foreach($regions as $region)
                                         <option value="{{ $region->id }}"
-                                                {{ request('region_id') == $region->id ? 'selected' : '' }}>
+                                            {{ request('region_id') == $region->id ? 'selected' : '' }}>
                                             {{ $region->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
+                            <!-- District -->
+                            <div class="mb-3">
+                                <label for="district_id" class="form-label text-dark">Tuman</label>
+                                <select class="form-select" id="district_id" name="district_id">
+                                    <option value="">Avval hududni tanlang</option>
+                                </select>
+                            </div>
+
+                            <!-- Category -->
                             <div class="mb-3">
                                 <label for="category_id" class="form-label text-dark">Kasb turi</label>
                                 <select class="form-select" id="category_id" name="category_id">
                                     <option value="">Barcha kasblar</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}"
-                                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ request('category_id') == $category->id ? 'selected' : '' }}>
                                             {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
+                            <!-- Submit -->
                             <button type="submit" class="btn btn-primary w-100">
                                 <i class="bi bi-search"></i> Qidirish
                             </button>
                         </form>
                     </div>
                 </div>
+
+                <!-- JS: Region → District bog'lash -->
+                <script>
+                    const regions = @json($regions);
+
+                    const regionSelect = document.getElementById('region_id');
+                    const districtSelect = document.getElementById('district_id');
+
+                    // Region o'zgarganda districtlarni yuklaymiz
+                    regionSelect.addEventListener('change', function () {
+                        const regionId = this.value;
+                        districtSelect.innerHTML = '<option value="">Tumanni tanlang</option>';
+
+                        if (!regionId) return;
+
+                        const selectedRegion = regions.find(r => r.id == regionId);
+
+                        selectedRegion.districts.forEach(d => {
+                            districtSelect.innerHTML += `
+                <option value="${d.id}" ${d.id == "{{ request('district_id') }}" ? 'selected' : ''}>
+                    ${d.name}
+                </option>
+            `;
+                        });
+                    });
+
+                    // Reload bo'lganda avvalgi tanlovni saqlab qolish
+                    window.addEventListener('load', () => {
+                        if (regionSelect.value) {
+                            regionSelect.dispatchEvent(new Event('change'));
+                        }
+                    });
+                </script>
+
             </div>
         </div>
     </div>
